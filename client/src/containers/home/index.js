@@ -5,6 +5,7 @@ import styles from "./index.css";
 import { createArticle } from "../../modules/article";
 import Spinner from "../spinner";
 import Links from "../Links";
+import Corporation from "../Corporation";
 
 class Home extends Component {
   constructor(props) {
@@ -50,12 +51,7 @@ class Home extends Component {
             </a>
           </strong>
         </p>
-        <p>
-          This website belongs to the corporation:{" "}
-          <a href={corporation.info} target="_blank">
-            {corporation.name}
-          </a>
-        </p>
+        <Corporation />
         <Links
           title="These are the outside sources we found in the article"
           links={good}

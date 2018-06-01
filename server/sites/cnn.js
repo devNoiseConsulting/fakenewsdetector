@@ -1,6 +1,10 @@
-const authorCleanup = function(author) {
+const authorCleanup = (author) => {
   remove = new RegExp(/^By (.*), CNN/);
   return author.replace(remove, '$1');
+};
+
+const site = () => {
+  console.log('DEBUG: CNN site function');
 };
 
 export default {
@@ -34,6 +38,11 @@ export default {
   ],
   ignore: ["instagram.com", "yahoo.com", "twitter.com", "facebook.com"],
   articleSelector: 'div[itemprop="articleBody"] a',
-  authorSelector: [".metadata__byline__author a", ".metadata__byline__author"],
-  authorCleanup
+  authorSelector: [
+    ".metadata__byline__author a",
+    ".metadata__byline__author",
+    ".cnnbyline .byline"
+  ],
+  authorCleanup,
+  site
 };

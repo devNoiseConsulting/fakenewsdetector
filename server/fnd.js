@@ -89,6 +89,11 @@ export default async (url, site) => {
       }, []);
       // console.log("debug authorCleanup", site.authorCleanup(authors[0]));
       // return site.authorCleanup(authors[0]);
+      // try {
+      //   site.site();
+      // } catch(e) {
+      //   console.log('Bad things happen', e);
+      // }
       return authors[0];
     }, site)
     .catch(error => {
