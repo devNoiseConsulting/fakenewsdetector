@@ -14,7 +14,7 @@ class Home extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderStats = this.renderStats.bind(this);
     this.renderError = this.renderError.bind(this);
-    this.authorURL = this.authorURL.bind(this);
+    this.author = this.author.bind(this);
   }
   state = {
     url: ""
@@ -30,28 +30,50 @@ class Home extends Component {
     event.stopPropagation();
     this.props.createArticle(url);
   }
-  authorURL() {
+  author() {
     const {
-      article: { author }
+      article: { authors }
     } = this.props;
 
-    return `https://www.google.com/search?q=${author.split(" ").join("+")}`;
+    if (!authors.length) {
+      return null;
+    }
+
+    return (
+      <p>
+        This article was written by:{" "}
+        {authors.map(author => {
+          const url = `https://www.google.com/search?q=${author
+            .split(" ")
+            .join("+")}`;
+
+          return (
+            <strong key={author}>
+              <a href={url} target="_blank">
+                {author}
+              </a>
+            </strong>
+          );
+        })}
+      </p>
+    );
   }
   renderStats() {
-    const { author, good, corps, corporation } = this.props.article;
+    const {
+      links: { good, corps },
+      corporation
+    } = this.props.article;
 
     return (
       <div>
         <h2>Here's what we found</h2>
+        {this.author()}
         <p>
-          This article was written by:{" "}
-          <strong>
-            <a href={this.authorURL()} target="_blank">
-              {author}
-            </a>
-          </strong>
+          This website belongs to the corporation:{" "}
+          <a href={corporation.info} target="_blank">
+            {corporation.name}
+          </a>
         </p>
-        <Corporation />
         <Links
           title="These are the outside sources we found in the article"
           links={good}
@@ -110,4 +132,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { createArticle: createArticle })(Home);
+export default connect(
+  mapStateToProps,
+  { createArticle: createArticle }
+)(Home);

@@ -1,6 +1,6 @@
 const authorCleanup = (author) => {
   remove = new RegExp(/^By (.*), CNN/);
-  return author.replace(remove, '$1');
+  return author.replace(remove, "$1");
 };
 
 const site = () => {
@@ -43,6 +43,5 @@ export default {
     ".metadata__byline__author",
     ".cnnbyline .byline"
   ],
-  authorCleanup,
-  site
+  authorCleanup
 };
