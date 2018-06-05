@@ -5,7 +5,6 @@ import styles from "./index.css";
 import { createArticle } from "../../modules/article";
 import Spinner from "../spinner";
 import Links from "../Links";
-import Corporation from "../Corporation";
 
 class Home extends Component {
   constructor(props) {
@@ -42,19 +41,32 @@ class Home extends Component {
     return (
       <p>
         This article was written by:{" "}
-        {authors.map(author => {
+        {authors.reduce((accum, author) => {
           const url = `https://www.google.com/search?q=${author
             .split(" ")
             .join("+")}`;
 
-          return (
-            <strong key={author}>
-              <a href={url} target="_blank">
-                {author}
-              </a>
-            </strong>
-          );
-        })}
+          if (accum.length === 0) {
+            accum.push(
+              <strong key={author}>
+                <a href={url} target="_blank">
+                  {author}
+                </a>
+              </strong>
+            );
+          } else {
+            accum = accum.concat([
+              <span key={author + "and"}> and </span>,
+              <strong key={author}>
+                <a href={url} target="_blank">
+                  {author}
+                </a>
+              </strong>
+            ]);
+          }
+
+          return accum;
+        }, [])}
       </p>
     );
   }
